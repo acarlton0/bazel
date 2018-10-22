@@ -1,0 +1,7 @@
+image: insready/bazel
+
+pipelines:
+  default:
+    - step:
+        script:
+          - bazel build //src:bazel
