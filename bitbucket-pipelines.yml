@@ -1,4 +1,4 @@
-image: insready/bazel
+image: docker.atl-paas.net/dea/bazel:18
 
 pipelines:
   default:
