@@ -1,7 +1,11 @@
-image: docker.atl-paas.net/dea/bazel:18
+image: insready/bazel
 
 pipelines:
   default:
     - step:
+        size: 2x # We exhaust our memory otherwise
         script:
-          - bazel build //src:bazel
+          - apt-get -y update
+          - apt-get -y install zip
+          - apt-get -y upgrade bazel
+          - bazel build //src:bazel --verbose_failures=true --sandbox_debug
