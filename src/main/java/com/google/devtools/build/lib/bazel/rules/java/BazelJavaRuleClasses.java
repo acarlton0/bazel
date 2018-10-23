@@ -148,6 +148,15 @@ public class BazelJavaRuleClasses {
                   .mandatoryProvidersList(
                       ImmutableList.of(CONTAINS_CC_LINK_PARAMS, CONTAINS_JAVA_PROVIDER))
                   .skipAnalysisTimeFileTypeCheck())
+          /* <!-- #BLAZE_RULE(java_rule).ATTRIBUTE(provided_deps) -->
+          Libraries to make available at compile-time only.
+          <!-- #END_BLAZE_RULE.ATTRIBUTE --> */
+          .add(
+              attr("provided_deps", LABEL_LIST)
+                  .allowedFileTypes(JavaSemantics.JAR)
+                  .allowedRuleClasses(ALLOWED_RULES_IN_DEPS)
+                  .mandatoryProvidersList(MANDATORY_JAVA_PROVIDER_ONLY)
+                  .skipAnalysisTimeFileTypeCheck())
           /* <!-- #BLAZE_RULE($java_rule).ATTRIBUTE(runtime_deps) -->
           Libraries to make available to the final binary or test at runtime only.
           Like ordinary <code>deps</code>, these will appear on the runtime classpath, but unlike
