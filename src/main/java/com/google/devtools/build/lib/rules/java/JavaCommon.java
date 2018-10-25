@@ -671,6 +671,10 @@ public class JavaCommon {
       builder.addAll(getRuntimeDeps(ruleContext));
       builder.addAll(getExports(ruleContext));
     }
+    if (!type.equals(ClasspathType.RUNTIME_ONLY)) {
+      builder.addAll(getProvidedDeps(ruleContext));
+    }
+
     builder.addAll(ruleContext.getPrerequisites("deps", Mode.TARGET));
 
     semantics.collectTargetsTreatedAsDeps(ruleContext, builder, type);
