@@ -118,7 +118,7 @@ public class FakeJavaInfo implements JavaInfoApi<FileApi> {
 
     @Override
     public JavaInfoApi<?> javaInfo(FileApi outputJarApi, Object compileJarApi, Object sourceJarApi,
-        Boolean neverlink, SkylarkList<?> deps, SkylarkList<?> runtimeDeps, SkylarkList<?> exports,
+        Boolean neverlink, SkylarkList<?> deps, SkylarkList<?> providedDeps, SkylarkList<?> runtimeDeps, SkylarkList<?> exports,
         Object actionsApi, Object sourcesApi, Object sourceJarsApi, Object useIjarApi,
         Object javaToolchainApi, Object hostJavabaseApi, Object jdepsApi, Location loc,
         Environment env) throws EvalException {
