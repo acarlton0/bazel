@@ -348,7 +348,6 @@ public final class JavaLibraryHelper {
             /* srcLessDepsExport= */ false,
             artifacts,
             deps,
-            /* providedDeps= */ ImmutableList.of(),
             /* runtimeDeps= */ ImmutableList.of(),
             exports);
 
