@@ -265,9 +265,6 @@ public class JavaCommon {
         /* deps= */ ImmutableList.of(
             JavaCompilationArgsProvider.legacyFromTargets(
                 targetsTreatedAsDeps(ClasspathType.COMPILE_ONLY), javaProtoLibraryStrictDeps)),
-        /* providedDeps= */ ImmutableList.of(
-                    JavaCompilationArgsProvider.legacyFromTargets(
-                            getProvidedDeps(ruleContext), javaProtoLibraryStrictDeps)),
         /* runtimeDeps= */ ImmutableList.of(
             JavaCompilationArgsProvider.legacyFromTargets(
                 getRuntimeDeps(ruleContext), javaProtoLibraryStrictDeps)),
@@ -281,7 +278,6 @@ public class JavaCommon {
       boolean srcLessDepsExport,
       JavaCompilationArtifacts compilationArtifacts,
       List<JavaCompilationArgsProvider> deps,
-      List<JavaCompilationArgsProvider> providedDeps,
       List<JavaCompilationArgsProvider> runtimeDeps,
       List<JavaCompilationArgsProvider> exports) {
     ClasspathType type = isNeverLink ? ClasspathType.COMPILE_ONLY : ClasspathType.BOTH;
@@ -293,7 +289,6 @@ public class JavaCommon {
     } else {
       deps.forEach(dep -> builder.addDeps(dep, type));
     }
-    providedDeps.forEach(dep -> builder.addDeps(dep, ClasspathType.COMPILE_ONLY));
     runtimeDeps.forEach(dep -> builder.addDeps(dep, ClasspathType.RUNTIME_ONLY));
     builder.addCompileTimeJavaDependencyArtifacts(
         collectCompileTimeDependencyArtifacts(
@@ -670,9 +665,6 @@ public class JavaCommon {
     if (!type.equals(ClasspathType.COMPILE_ONLY)) {
       builder.addAll(getRuntimeDeps(ruleContext));
       builder.addAll(getExports(ruleContext));
-    }
-    if (!type.equals(ClasspathType.RUNTIME_ONLY)) {
-      builder.addAll(getProvidedDeps(ruleContext));
     }
 
     builder.addAll(ruleContext.getPrerequisites("deps", Mode.TARGET));
