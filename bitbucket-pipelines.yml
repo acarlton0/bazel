@@ -1,11 +1,9 @@
-image: insready/bazel
+image: s50600822/bazel:18
 
 pipelines:
   default:
     - step:
         size: 2x # We exhaust our memory otherwise
         script:
-          - apt-get -y update
-          - apt-get -y install zip
-          - apt-get -y upgrade bazel
+          - bazel version
           - bazel build //src:bazel --verbose_failures=true --sandbox_debug
