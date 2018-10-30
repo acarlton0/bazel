@@ -418,6 +418,7 @@ public final class JavaInfo extends NativeInfo implements JavaInfoApi<Artifact> 
         Object sourceJarApi,
         Boolean neverlink,
         SkylarkList<?> deps,
+        SkylarkList<?> providedDeps,
         SkylarkList<?> runtimeDeps,
         SkylarkList<?> exports,
         Object actionsApi,
@@ -478,6 +479,7 @@ public final class JavaInfo extends NativeInfo implements JavaInfoApi<Artifact> 
                 useIjar != null ? useIjar : true,
                 neverlink,
                 (SkylarkList<JavaInfo>) deps,
+                (SkylarkList<JavaInfo>) providedDeps,
                 (SkylarkList<JavaInfo>) runtimeDeps,
                 (SkylarkList<JavaInfo>) exports,
                 actions,
@@ -493,6 +495,7 @@ public final class JavaInfo extends NativeInfo implements JavaInfoApi<Artifact> 
           .createJavaInfo(
               outputJar, compileJar, sourceJar, neverlink,
               (SkylarkList<JavaInfo>) deps,
+              (SkylarkList<JavaInfo>) providedDeps,
               (SkylarkList<JavaInfo>) runtimeDeps,
               (SkylarkList<JavaInfo>) exports, jdeps, loc);
     }

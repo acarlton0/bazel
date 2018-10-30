@@ -89,6 +89,7 @@ final class JavaInfoBuildHelper {
       Boolean useIjar,
       Boolean neverlink,
       SkylarkList<JavaInfo> compileTimeDeps,
+      SkylarkList<JavaInfo> providedDeps,
       SkylarkList<JavaInfo> runtimeDeps,
       SkylarkList<JavaInfo> exports,
       Object actions,
@@ -146,6 +147,7 @@ final class JavaInfoBuildHelper {
         sourceJar,
         neverlink,
         compileTimeDeps,
+        providedDeps,
         runtimeDeps,
         exports,
         jdeps,
@@ -162,6 +164,7 @@ final class JavaInfoBuildHelper {
    * @param sourceJar the source jar that was used to create the output jar
    * @param neverlink if true only use this library for compilation and not at runtime
    * @param compileTimeDeps compile time dependencies that were used to create the output jar
+   * @param providedDeps provided dependencies that were used to create the output jar
    * @param runtimeDeps runtime dependencies that are needed for this library
    * @param exports libraries to make available for users of this library. <a
    *     href="https://docs.bazel.build/versions/master/be/java.html#java_library"
@@ -175,6 +178,7 @@ final class JavaInfoBuildHelper {
       @Nullable Artifact sourceJar,
       Boolean neverlink,
       SkylarkList<JavaInfo> compileTimeDeps,
+      SkylarkList<JavaInfo> providedDeps,
       SkylarkList<JavaInfo> runtimeDeps,
       SkylarkList<JavaInfo> exports,
       @Nullable Artifact jdeps,
@@ -207,6 +211,9 @@ final class JavaInfoBuildHelper {
         .forEach(args -> javaCompilationArgsBuilder.addExports(args, type));
     fetchProviders(compileTimeDeps, JavaCompilationArgsProvider.class)
         .forEach(args -> javaCompilationArgsBuilder.addDeps(args, type));
+
+    fetchProviders(providedDeps, JavaCompilationArgsProvider.class)
+        .forEach(args -> javaCompilationArgsBuilder.addDeps(args, COMPILE_ONLY));
 
     fetchProviders(runtimeDeps, JavaCompilationArgsProvider.class)
         .forEach(args -> javaCompilationArgsBuilder.addDeps(args, RUNTIME_ONLY));

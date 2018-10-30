@@ -202,6 +202,13 @@ public interface JavaInfoApi <FileT extends FileApi> extends StructApi {
             defaultValue = "[]",
             doc = "Compile time dependencies that were used to create the output jar."),
         @Param(
+            name = "provided_deps",
+            type = SkylarkList.class,
+            generic1 = JavaInfoApi.class,
+            named = true,
+            defaultValue = "[]",
+            doc = "Provided dependencies that were used to create the output jar."),
+        @Param(
             name = "runtime_deps",
             type = SkylarkList.class,
             generic1 = JavaInfoApi.class,
@@ -301,6 +308,7 @@ public interface JavaInfoApi <FileT extends FileApi> extends StructApi {
         Object sourceJarApi,
         Boolean neverlink,
         SkylarkList<?> deps,
+        SkylarkList<?> providedDeps,
         SkylarkList<?> runtimeDeps,
         SkylarkList<?> exports,
         Object actionsApi,

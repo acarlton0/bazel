@@ -747,12 +747,13 @@ public final class JavaCompilationHelper {
    *
    * @param deps the dependencies to be included as roots of the transitive
    *        closure
+   * @param strictJavaDeps the strictness level used in verifying direct dependency checks.
    */
-  public void addLibrariesToAttributes(Iterable<? extends TransitiveInfoCollection> deps) {
+  public void addLibrariesToAttributes(Iterable<? extends TransitiveInfoCollection> deps, StrictDepsMode strictJavaDeps) {
     // Enforcing strict Java dependencies: when the --strict_java_deps flag is
     // WARN or ERROR, or is DEFAULT and strict_java_deps attribute is unset,
     // we use a stricter javac compiler to perform direct deps checks.
-    attributes.setStrictJavaDeps(getStrictJavaDeps());
+    attributes.setStrictJavaDeps(strictJavaDeps);
     addLibrariesToAttributesInternal(deps);
 
     JavaClasspathMode classpathMode = getJavaConfiguration().getReduceJavaClasspath();
@@ -767,6 +768,10 @@ public final class JavaCompilationHelper {
       }
       addDependencyArtifactsToAttributes(attributes, compilationArgsProviders);
     }
+  }
+
+  public void addLibrariesToAttributes(Iterable<? extends TransitiveInfoCollection> deps) {
+      addLibrariesToAttributes(deps, getStrictJavaDeps());
   }
 
   /**
